@@ -8,7 +8,7 @@ https://github.com/solo-io/squash[Squash] plugin for https://github.com/asdf-vm/
 
 [source,bash]
 ----
-asdf plugin-add maistra https://github.com/bartoszmajsak/asdf-squash.git
+asdf plugin-add squash https://github.com/bartoszmajsak/asdf-squash.git
 ----
 
 == Use
