@@ -2,7 +2,10 @@
 
 releases_path=https://api.github.com/repos/solo-io/squash/releases
 cmd="curl -s"
-if [ -n "$OAUTH_TOKEN" ]; then
+
+if [ -n "$GITHUB_API_TOKEN" ]; then
+  cmd="$cmd -H 'Authorization: token $GITHUB_API_TOKEN'"
+elif [ -n "$OAUTH_TOKEN" ]; then
   cmd="$cmd -H 'Authorization: token $OAUTH_TOKEN'"
 fi
 
@@ -15,5 +18,5 @@ function sort_versions() {
 }
 
 # Fetch all tag names, and get only second column. Then remove all unnecesary characters.
-versions=$(eval $cmd | grep -Po '"tag_name": *\K"[^"]*"' | sed 's/\"//;s/\"//' | sort_versions )
+versions=$(eval $cmd | grep -oE "tag_name\":\s?\"v.{1,15}\"," | sed 's/tag_name\": \"//;s/\",//' | sort_versions)
 echo $versions
